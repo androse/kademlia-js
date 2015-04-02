@@ -1,0 +1,40 @@
+doctype html
+html(lang="en")
+	header
+		title Node
+	body
+		div 
+			a(href='/') All Nodes
+		div
+			form(action="/node/#{node.nodeID}/pair" method="post")
+				h3 Create a new Key/Value Pair
+				label(for="key-input") Key:
+				input#key-input(type="text" name="key")
+				label(for="value-input") Value:
+				input#value-input(type="text" name="value")
+				input(type="submit" value="Create")
+
+		div 
+			form(action="/node/#{node.nodeID}/pair" method="get")
+				label(for="query-input") Search Key:
+				input#query-input(type="text" name="key")
+				input(type="submit" value="Get")
+
+		div
+			h3= node.nodeID
+			p Port: #{node.port}
+			p Key/Value Pairs:
+				each pair in node.pairs
+					if pair.publisher
+						li key: #{pair.key}, value: #{pair.value} (self published)
+					else
+						li key: #{pair.key}, value: #{pair.value}
+			p Buckets:
+				each bucket in node.buckets
+					p= bucket.index
+						each contact in bucket.contacts
+							li id: #{contact.nodeID}, port: #{contact.port}
+
+		div 
+			a(href="/node/#{node.nodeID}/delete")
+				button Remove Me

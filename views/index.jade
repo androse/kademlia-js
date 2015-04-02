@@ -1,0 +1,35 @@
+doctype html
+html(lang="en")
+	header
+		title All Nodes
+	body
+		div
+			h3 Total Nodes: #{nodes.length}
+		
+		div
+			form(action="/newnodes" method="post")
+				h3 Create Multiple Nodes
+				label(for="new-num-input") Number of Nodes to Create:
+				input#new-num-input(type="number" name="num")
+				input(type="submit" value="Create")
+
+		div 
+			h3 Create One Node
+			a(href="/newnode")
+				button Create
+
+		div
+			form(action="/deletenodes" method="post")
+				h3 Delete Multiple Random Nodes
+				label(for="del-num-input") Number of Nodes to Remove:
+				input#del-num-input(type="number" name="num")
+				input(type="submit" value="Remove")
+
+		div.info
+			each node in nodes
+				div.nodeInfo
+					a(href="/node/#{node.nodeID}")
+						h3= node.nodeID
+					p Port: #{node.port}
+					p Number of Key/Value Pairs: #{node.pairs.length}
+					p Number of Contacts: #{node.numContacts}
